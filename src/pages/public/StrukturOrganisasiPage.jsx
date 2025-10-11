@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
-import { User, Users, Briefcase, DollarSign, BookOpen, Handshake, TrendingUp, Users2, Mic, Settings2, Shield, Award, GraduationCap, ChevronDown } from 'lucide-react';
-import Card from '@/components/ui/Card';
+import { Shield, Award, Users, Briefcase, GraduationCap, Users2, Mic, Handshake, DollarSign, TrendingUp, Settings2, ChevronDown } from 'lucide-react';
 
-// --- DATA LENGKAP DARI SK PENGURUS APPKOI 2025-2029 ---
+// Card component placeholder, as the original is imported.
+// In a real environment, you would remove this and rely on your import.
+const Card = ({ children, className = "" }) => (
+  <div className={`bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm ${className}`}>
+    {children}
+  </div>
+);
 
+
+// --- DATA LENGKAP DARI SK PENGURUS APKOI 2025-2029 ---
 const dewanKehormatan = [ "Prof. Dr. Siswantoyo, M.Kes (UNY)", "Prof. Dr. Tomoliyus, M.S (UNY)", "Prof. Dr. M. Furqon Hidayatullah, M.Pd (UNS)", "Prof. Dr. Eddy Marheni, M.Pd (UNP)", "Prof. Dr. Ria Lumintuarso, M.Pd (UNY)", "Prof. Dr. Sapta Kunta Purnama, M.Pd (UNS)", "Prof. Dr. Syahrudin, M.Pd (UNM)", "Prof. Dr. Rd. Boyke Mulyana, M.Pd (UPI)", "Prof. Dr. Imran Akhmad, M.Pd (UNIMED)", "Prof. Dr. Komarudin, M.Pd (UPI)", "Prof. Dr. I Made Sry Undy Mahardika, M.Pd (Unesa)", "Prof. Dr. A Paturusi, M.Kes.,AIFO (UNIMA)" ];
 const dewanPakar = [ "Prof. Dr. Endang Rini Sukamti, M.S (UNY)", "Prof. Dr. Nasuka, M.Kes (UNNES)", "Prof. Dr. Imam Marsudi, M.Si (Unesa)", "Prof. Dr. Umar , MS., AIFO (UNP)", "Prof. Dr. Dikdik Z. Sidik, M.Pd (UPI)", "Prof. Dr. Johansyah Lubis, M. Pd (UNJ)", "Prof. Dr. Awan Hariono, M.Or (UNY)", "Prof. Dr. Abdul Alim, M.Or (UNY)", "Prof. Dr. Nurkholis, M.Kes (Unesa)", "Prof. Dr. Mulyana, M.Pd (UPI)", "Prof. Dr. Ch. Fajar Sriwahyuniati, S.Pd., M.Or (UNY)", "Prof. Dr. Or. Gigih Siantoro, M.Pd (Unesa)", "Prof. Dr. Nurkadri, M.Pd (UNIMED)", "Prof. Dr. Ilham (UNJA)", "Prof. Dr. Made Agus Dharmadi, M.Pd (Undiksha)", "Prof. Dr. H. Nukhrawi Nawir, M.Kes.,AIFO (UNM)", "Dr. Irmantara Subagio, M.Kes (Unesa)", "Dr. Fauzi, M.Si (UNY)", "Dr. Frederik Alfred Makadada, M.Kes (UNIMA)", "Dr. Tirto Apriyanto, M.Si (UNJ)", "Dr. Imam Hariadi, M.Pd (UM)", "Dr. Sri Haryono, S.Pd.,M.Or (UNNES)", "Dr. Hartono Hadjarati, S.Pd. M.Pd (UNG)", "Dr. Hikmad Hakim, M.Kes., AIFO (UNM)", "Drs. Supriatna, M.Pd (UM)" ];
-const pengurusInti = [ { jabatan: 'Ketua Umum', nama: 'Dr. Suratmin, S.Pd., M.Or', asal: 'Undiksha', icon: Award }, { jabatan: 'Wakil Ketua', nama: 'Dr. Haris Nugroho, S.Pd.,M.Or', asal: 'UNS', icon: User }, { jabatan: 'Sekretaris', nama: 'Dr. Wisnu Nugroho, M.Pd', asal: 'UNY', icon: BookOpen }, { jabatan: 'Wakil Sekretaris', nama: 'Dr. Syarif Hidayat, M.Pd', asal: 'Undiksha', icon: BookOpen }, { jabatan: 'Bendahara', nama: 'Dr. Hendrig Joko Prasetyo, S.Pd.,M.Or', asal: 'UNS', icon: DollarSign }, { jabatan: 'Wakil Bendahara', nama: 'Adiska Rani Ditya Candra, S.Pd.,M.Pd', asal: 'UNNES', icon: DollarSign } ];
 
+const pengurusInti = [
+  { jabatan: 'Ketua Umum', nama: 'Dr. Suratmin, S.Pd., M.Or', asal: 'Undiksha', image: '/Suratmin.jpg' },
+  { jabatan: 'Wakil Ketua', nama: 'Dr. Haris Nugroho, S.Pd.,M.Or', asal: 'UNS', image: '/haris.jpg' },
+  { jabatan: 'Sekretaris', nama: 'Dr. Wisnu Nugroho, M.Pd', asal: 'UNY', image: '/wisnu.jpg' },
+  { jabatan: 'Wakil Sekretaris', nama: 'Dr. Syarif Hidayat, M.Pd', asal: 'Undiksha', image: '/syarif.jpg' },
+  { jabatan: 'Bendahara', nama: 'Dr. Hendrig Joko Prasetyo, S.Pd.,M.Or', asal: 'UNS', image: '/hendrig.jpeg' },
+  { jabatan: 'Wakil Bendahara', nama: 'Adiska Rani Ditya Candra, S.Pd.,M.Pd', asal: 'UNNES', image: '/adiska.jpg' },
+];
 const semuaBidang = [
     { nama: 'Organisasi dan Kelembagaan', koordinator: 'Dr. Fadillah Umar. M.Or (UNS)', icon: Users, anggota: ["Dr. Abdul Gani, M.Pd (UNJ)", "Dr. Mansuralhudlori, M.Or (UNS)", "Dr. Donie, S.Pd, M.Pd (UNP)", "Dr. Reza Hadinata, S.Si.,M.Pd (UNJA)", "Dr. Nawan Primasoni, M.Or (UNY)", "Dr. Jamaluddin, M.Pd (UNM)", "Dr. Iwan Hermawan, M.Pd (UNJ)", "Dr. Fedrik Dj Samarauw, M.Kes (UNIMA)", "Wisnu Mahardika, S.Pd.,M.Or (UTP)", "Salsabilah, S.Pd.,M.Pd (UNRI)", "Juli Chandra, M.Pd (UBHARA)", "Prisca Widiawat, M.Pd (UM)", "Afif Bayu Eko Prasetyo, S.Pd., M.Or (UMUKA)"] },
     { nama: 'Lembaga Sertifikasi Profesi (LSP)', koordinator: 'Dr. Alen Rismayadi, S.Pd.,M. Pd (UPI)', icon: Briefcase, anggota: ["Dr. Roma Irawan, S,Pd, M.Pd (UNP)", "Dr. Wijono, M.Pd (Unesa)", "Dr. Wasti Danardani, S.Pd.,MA (Undiksha)", "Dr. Agus Supriyoko, M.Pd (UTP)", "Dr. Juriana, S.Psi.,M.Psi (UNJ)", "Dr. Danang Wicaksono, M.Or (UNY)", "Dr. Dewangga Yudhistira, M.Pd (Unesa)", "Dr. Okky Indera Pamungkas, M.Or (UNY)", "Dr. Ahmad Rum Bismar, M.Pd (UNM)", "Dr. Padli, S.Si.,M.Pd (UNP)", "Dr. Rina Ambar Dewanti, M.Pd (UNJ)", "Edy Dharma Putra Duhe, S.Pd. M.Pd (UNG)", "Geraldi Novian, M.Pd (UPI)", "Dra. Jeanne R. Malonda, M.Kes (UNIMA)", "Dery Rimasa, M.Pd (UPI)", "Oca Fernandes AF, S.Pd.,M.Pd (UNRI)"] },
@@ -21,18 +35,27 @@ const semuaBidang = [
     { nama: 'Hubungan Masyarakat (Humas)', koordinator: 'Kodrad Budiyono, S.Pd.,M.Pd (UTP)', icon: Mic, anggota: ["Dr. Muhammad Kharis Fajar, S.Pd. M.Pd (Unesa)", "Fajar Arie Mangun, M. Pd (UNJ)", "Iwan Budi Setiawan, S.Pd., M.Pd (UNJA)", "Henry Hermawan S.Pd., M.Or (UNS)", "Dr. Alimandan, S.Pd., M.Pd (UNRI)", "Muhammad Thoriq Hadad Akbar, S.Pd., M.Or (UMUKA)", "Siti Jubaedah, S.Or., M.Pd (UNTARA)", "Muslim, S.Pd.,M.Pd (UNM)", "Karisdha Pradityana, M.Pd (UT)"] },
 ];
 
-const CardJabatan = ({ jabatan, nama, asal, icon: Icon, className = '' }) => (
-  <Card className={`p-5 text-center transition-transform transform hover:-translate-y-1 ${className}`}>
-    <div className="mx-auto flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-primary-light text-primary">
-      <Icon size={32} />
+// Komponen untuk kartu profil pengurus inti
+const ProfileCard = ({ nama, jabatan, image, asal }) => (
+    <div className="text-center group">
+        <div className="relative inline-block">
+            <img 
+                src={image} 
+                alt={`Foto ${nama}`}
+                className="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mx-auto border-4 border-white dark:border-gray-800 shadow-xl transition-all duration-300 group-hover:scale-105 group-hover:shadow-2xl"
+                onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/200x200/EFEFEF/333333?text=Error'; }}
+            />
+            <div className="absolute inset-0 rounded-full bg-red-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+        </div>
+        <div className="mt-4 space-y-1">
+            <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">{nama}</h3>
+            <p className="text-sm md:text-base font-medium text-red-600 dark:text-red-400">{jabatan}</p>
+            <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">{asal}</p>
+        </div>
     </div>
-    <h3 className="text-lg font-bold text-gray-900 dark:text-white">{jabatan}</h3>
-    <p className="mt-1 text-md text-gray-800 dark:text-gray-200">{nama}</p>
-    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{asal}</p>
-  </Card>
 );
 
-// Mengembalikan komponen Accordion untuk dropdown
+// Komponen untuk dropdown (accordion) setiap bidang
 const AccordionItem = ({ bidang }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { nama, koordinator, icon: Icon, anggota } = bidang;
@@ -41,10 +64,10 @@ const AccordionItem = ({ bidang }) => {
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center p-4 text-left text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none"
+        className="w-full flex justify-between items-center p-4 text-left text-gray-900 dark:text-white bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none transition-colors"
       >
         <div className="flex items-center">
-            <Icon className="mr-3 text-primary" size={20} />
+            <Icon className="mr-3 text-red-600 dark:text-red-400" size={20} />
             <span className="font-semibold">{nama}</span>
         </div>
         <div className='flex items-center'>
@@ -53,9 +76,9 @@ const AccordionItem = ({ bidang }) => {
         </div>
       </button>
       {isOpen && (
-        <div className="p-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div className="p-4 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
             <p className='text-sm text-gray-500 dark:text-gray-400 mb-3 sm:hidden'>Koordinator: {koordinator}</p>
-            <ul className="list-disc list-inside space-y-2 pl-2 text-gray-600 dark:text-gray-300">
+            <ul className="list-disc list-inside space-y-2 pl-2 text-gray-600 dark:text-gray-400">
                 {anggota.map((nama, index) => (
                     <li key={index}>{nama}</li>
                 ))}
@@ -66,51 +89,119 @@ const AccordionItem = ({ bidang }) => {
   );
 };
 
-const StrukturOrganisasiPage = () => {
-  return (
-    <div className="py-16 bg-gray-50 dark:bg-gray-800 min-h-screen">
-      <div className="max-w-screen-xl px-4 mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white">Struktur Organisasi</h1>
-          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">Pengurus Pusat APPKOI Masa Bhakti 2025-2029</p>
+// --- KOMPONEN: Tabel untuk Dewan ---
+const DewanTable = ({ title, icon: Icon, data }) => (
+    <Card className="overflow-hidden">
+        <div className="p-5 border-b dark:border-gray-700">
+            <h3 className="text-xl font-bold text-red-600 dark:text-red-400 flex items-center">
+                <Icon className="mr-3"/>{title}
+            </h3>
         </div>
+        <div className="overflow-x-auto">
+            <table className="min-w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" className="px-6 py-3 w-16">No.</th>
+                        <th scope="col" className="px-6 py-3">Nama</th>
+                        <th scope="col" className="px-6 py-3">Asal Institusi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map((item, index) => {
+                        const match = item.match(/(.*) \((.*)\)/);
+                        const name = match ? match[1] : item;
+                        const university = match ? match[2] : '-';
+                        return (
+                            <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">{index + 1}</td>
+                                <td className="px-6 py-4">{name}</td>
+                                <td className="px-6 py-4">{university}</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
+    </Card>
+);
 
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-gray-200">Pengurus Inti</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {pengurusInti.map((p, index) => (
-               <CardJabatan key={p.jabatan} {...p} className={index === 0 ? 'lg:col-span-3' : ''} />
-            ))}
+// --- KOMPONEN BARU: Dropdown untuk Section Dewan ---
+const DewanDropdown = () => {
+  const [isOpen, setIsOpen] = useState(true); // Dibuat terbuka secara default
+
+  return (
+    <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden max-w-4xl mx-auto">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex justify-between items-center p-4 text-left text-gray-900 dark:text-white bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none transition-colors"
+      >
+        <div className="flex items-center">
+            <Users className="mr-3 text-red-600 dark:text-red-400" size={20} />
+            <span className="font-semibold">Dewan</span>
+        </div>
+        <ChevronDown
+          size={20}
+          className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+        />
+      </button>
+
+      {isOpen && (
+        <div className="p-4 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <DewanTable title="Dewan Kehormatan" icon={Award} data={dewanKehormatan} />
+            <DewanTable title="Dewan Pakar" icon={Shield} data={dewanPakar} />
           </div>
         </div>
-        
-         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-gray-200">Dewan</h2>
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <Card className="p-6">
-                    <h3 className="text-xl font-bold text-primary mb-3 flex items-center"><Award className="mr-2"/>Dewan Kehormatan</h3>
-                    <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                        {dewanKehormatan.map(nama => <li key={nama}>{nama}</li>)}
-                    </ul>
-                </Card>
-                 <Card className="p-6">
-                    <h3 className="text-xl font-bold text-primary mb-3 flex items-center"><Shield className="mr-2"/>Dewan Pakar</h3>
-                    <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                        {dewanPakar.map(nama => <li key={nama}>{nama}</li>)}
-                    </ul>
-                </Card>
-           </div>
-        </div>
+      )}
+    </div>
+  );
+};
 
-        <div>
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-gray-200">Struktur Bidang</h2>
-          {/* Mengganti grid dengan layout kolom tunggal untuk accordion */}
+
+const StrukturOrganisasiPage = () => {
+  return (
+    <div className="py-16 bg-gray-50 dark:bg-gray-900 min-h-screen">
+      {/* --- KONTEN UTAMA DIBUNGKUS DALAM CONTAINER DENGAN PEMISAH ANTAR SECTION --- */}
+      <div className="max-w-screen-xl px-4 mx-auto space-y-20">
+        
+        {/* Section Header Halaman */}
+        <section className="text-center">
+          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white">Struktur Organisasi</h1>
+          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">Pengurus Pusat APKOI Masa Bhakti 2025-2029</p>
+        </section>
+
+        {/* --- SECTION PENGURUS INTI --- */}
+        <section>
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Struktur Pengurus Inti</h2>
+          <div className="flex flex-col items-center space-y-12">
+            <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-20">
+              <ProfileCard {...pengurusInti[0]} />
+              <ProfileCard {...pengurusInti[1]} />
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 lg:gap-12 w-full max-w-4xl mx-auto">
+              <ProfileCard {...pengurusInti[2]} />
+              <ProfileCard {...pengurusInti[3]} />
+              <ProfileCard {...pengurusInti[4]} />
+              <ProfileCard {...pengurusInti[5]} />
+            </div>
+          </div>
+        </section>
+        
+        {/* --- SECTION DEWAN (SEKARANG MENGGUNAKAN DROPDOWN) --- */}
+        <section>
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Dewan</h2>
+          <DewanDropdown />
+        </section>
+
+        {/* --- SECTION STRUKTUR BIDANG --- */}
+        <section>
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Struktur Bidang</h2>
           <div className="space-y-4 max-w-4xl mx-auto">
             {semuaBidang.map((bidang) => (
               <AccordionItem key={bidang.nama} bidang={bidang} />
             ))}
           </div>
-        </div>
+        </section>
 
       </div>
     </div>
@@ -118,4 +209,5 @@ const StrukturOrganisasiPage = () => {
 };
 
 export default StrukturOrganisasiPage;
+
 

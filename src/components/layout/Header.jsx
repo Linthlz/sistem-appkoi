@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../hooks/useAppContext';
 import {
-  Menu, Search, Bell, Sun, Moon,
+  Menu, Bell, Sun, Moon,
   ChevronDown, UserCircle, Settings, LogOut
 } from 'lucide-react';
 
@@ -21,9 +21,8 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Pastikan currentUser tidak null sebelum mencoba mengakses propertinya
   if (!currentUser) {
-    return null; // Atau tampilkan header versi loading/logged out
+    return null;
   }
 
   return (
@@ -38,11 +37,8 @@ const Header = () => {
             >
               <Menu size={24} />
             </button>
-            <div className="hidden md:flex relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-              <input type="search" placeholder="Search..." className="pl-9 pr-4 py-2 w-64 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-1 focus:ring-primary" />
-            </div>
           </div>
+
           {/* Sisi Kanan Header */}
           <div className="flex items-center space-x-4">
             <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -60,7 +56,6 @@ const Header = () => {
               </button>
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5">
-                  {/* MEMPERBAIKI LINK DI SINI */}
                   <Link to="/dashboard/profile" className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                     <UserCircle size={16} className="mr-2" /> Profil
                   </Link>
@@ -81,4 +76,3 @@ const Header = () => {
 };
 
 export default Header;
-
