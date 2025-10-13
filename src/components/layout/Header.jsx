@@ -6,10 +6,12 @@ import {
   ChevronDown, UserCircle, Settings, LogOut
 } from 'lucide-react';
 
-const Header = () => {
-  const { setSidebarOpen, isSidebarOpen, theme, toggleTheme, logout, currentUser } = useAppContext();
+const Header = ({ isSidebarOpen, setSidebarOpen, currentUser, logout }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [theme, setTheme] = useState('light');
+  
+  const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -29,7 +31,6 @@ const Header = () => {
     <header className="sticky top-0 z-30 bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 -mb-px">
-          {/* Sisi Kiri Header */}
           <div className="flex items-center space-x-4">
             <button
               className="text-gray-500 hover:text-gray-600 lg:hidden"
@@ -38,15 +39,13 @@ const Header = () => {
               <Menu size={24} />
             </button>
           </div>
-
-          {/* Sisi Kanan Header */}
           <div className="flex items-center space-x-4">
             <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
             </button>
             <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 relative">
               <Bell size={20} />
-              <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-primary ring-2 ring-white dark:ring-gray-800"></span>
+              <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-600 ring-2 ring-white dark:ring-gray-800"></span>
             </button>
             <div className="relative" ref={dropdownRef}>
               <button onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center space-x-2">

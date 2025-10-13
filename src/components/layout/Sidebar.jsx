@@ -1,12 +1,10 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Outlet, Link, NavLink, useLocation } from 'react-router-dom';
 import { useAppContext } from '../../hooks/useAppContext.js';
 import { menuItems } from '../../utils/constants.js'; // Menggunakan menu dari constants
 import { Briefcase, X } from 'lucide-react';
 
-const Sidebar = () => {
-  const { isSidebarOpen, setSidebarOpen } = useAppContext();
-
+const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
   return (
     <>
       <div
@@ -27,10 +25,9 @@ const Sidebar = () => {
               <li key={item.name} className="px-4 py-1">
                 <NavLink
                   to={item.path}
-                  // 'end' property ensures only the exact path is marked as active for dashboard
                   end={item.path === '/dashboard'}
                   onClick={() => { if (window.innerWidth < 1024) setSidebarOpen(false) }}
-                  className={({ isActive }) => `flex items-center p-2 rounded-lg transition-colors ${isActive ? 'bg-blue-600 text-white' : 'hover:bg-gray-800'}`}
+                  className={({ isActive }) => `flex items-center p-2 rounded-lg transition-colors ${isActive ? 'bg-red-600 text-white' : 'hover:bg-gray-800'}`}
                 >
                   <item.icon size={20} className="mr-3" />
                   <span>{item.name}</span>
@@ -43,5 +40,6 @@ const Sidebar = () => {
     </>
   );
 };
+
 
 export default Sidebar;
