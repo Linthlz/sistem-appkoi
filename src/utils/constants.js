@@ -1,15 +1,14 @@
-import {
- Home, ChevronsRight, Menu, Bell, Sun, Moon, ChevronDown, UserCircle, 
-    Settings, LogOut, Briefcase, X, LayoutDashboard, Users, Newspaper, Award, BookOpen 
+import { 
+  LayoutDashboard, Users, Newspaper, Award, 
+  BookOpen, Briefcase, Settings 
 } from 'lucide-react';
 
-// Path diubah agar sesuai dengan struktur di AppRoutes.jsx
 export const menuItems = [
-    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'Manajemen User', path: '/dashboard/users', icon: Users },
-    { name: 'Berita & Acara', path: '/dashboard/news', icon: Newspaper },
-    { name: 'Sertifikat', path: '/dashboard/certificates', icon: Award },
-    { name: 'Kurikulum', path: '/dashboard/curriculums', icon: BookOpen },
-    { name: 'Program', path: '/dashboard/services', icon: Briefcase },
-    { name: 'Pengaturan', path: '/dashboard/settings', icon: Settings },
+  { name: 'Dashboard', path: '', icon: LayoutDashboard }, // Index (Halaman Utama)
+  { name: 'Manajemen User', path: 'users', icon: Users },
+  { name: 'Berita & Acara', path: 'news', icon: Newspaper },
+  { name: 'Sertifikat', path: 'certificates', icon: Award },
+  { name: 'Kurikulum', path: 'curriculums', icon: BookOpen },
+  { name: 'Program', path: 'services', icon: Briefcase },
+  { name: 'Pengaturan', path: 'settings', icon: Settings },
 ];

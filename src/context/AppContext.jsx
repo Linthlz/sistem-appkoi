@@ -6,8 +6,9 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [theme, setTheme] = useState('light');
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // Default true untuk development
-  const [currentUser, setCurrentUser] = useState(dummyUsers[0]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Default false untuk keamanan
+  const [currentUser, setCurrentUser] = useState(null);
+  const [allUsers, setAllUsers] = useState(dummyUsers); // Database user lokal
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -20,6 +21,10 @@ export const AppProvider = ({ children }) => {
     setCurrentUser(user);
   };
 
+  const registerUser = (newUser) => {
+    setAllUsers((prev) => [...prev, newUser]);
+  };
+
   const logout = () => {
     setIsAuthenticated(false);
     setCurrentUser(null);
@@ -29,6 +34,7 @@ export const AppProvider = ({ children }) => {
     isSidebarOpen, setSidebarOpen,
     theme, toggleTheme,
     isAuthenticated, login, logout, currentUser,
+    allUsers, registerUser // Tambahkan ke provider
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

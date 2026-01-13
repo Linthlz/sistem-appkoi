@@ -33,7 +33,7 @@ export const dummyNews = [
     title: "APKOI Resmi Menjalin Kerjasama dengan Universitas Muhammadiyah Karanganyar",
     date: "20 Februari 2025",
     category: "Kerjasama",
-    image: "/images/landing2.jpeg", // ubah path
+    image: "/landing3.jpeg", // ubah path
     excerpt:
       "APKOI dan Universitas Muhammadiyah Karanganyar menandatangani MoU untuk pengembangan akademik dan profesional kepelatihan olahraga.",
     content: `
@@ -49,7 +49,7 @@ export const dummyNews = [
     title: "APKOI Lanjutkan Kolaborasi Strategis dengan Kampus 5 UNESA",
     date: "5 Maret 2025",
     category: "Kerjasama",
-    image: "/landing3.jpeg", // ubah path
+    image: "/landing2.jpeg", // ubah path
     excerpt:
       "APKOI memperluas kerja sama dengan Kampus 5 UNESA Mojokerto untuk pengembangan kurikulum dan teknologi kepelatihan.",
     content: `

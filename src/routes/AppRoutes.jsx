@@ -1,9 +1,9 @@
 import React from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import AnimatedPage from "../components/layout/AnimatedPage.jsx";
-import ScrollToTop from "../components/layout/ScrollToTop.jsx"; // 🔝 Tetap dipakai
+import ScrollToTop from "../components/layout/ScrollToTop.jsx";
 
 // Layouts
 import PublicLayout from "../components/layout/PublicLayout.jsx";
@@ -33,221 +33,65 @@ import ServicesManagement from "../pages/dashboard/ServicesManagement.jsx";
 import ProfilePage from "../pages/dashboard/ProfilePage.jsx";
 import SettingsPage from "../pages/dashboard/SettingsPage.jsx";
 import CertificateManagement from '../pages/dashboard/CertificateManagement.jsx';
-import CurriculumManagement from "../pages/dashboard/CurriculumManagement.jsx"; // ➕ Impor ditambahkan
+import CurriculumManagement from "../pages/dashboard/CurriculumManagement.jsx";
 
 const AppRoutes = () => {
-  const location = useLocation(); // 🧭 Tambahan penting untuk mendeteksi path aktif
+  const location = useLocation();
 
-  return (
-    <>
-      {/* ✅ Scroll ke atas setiap ganti halaman */}
-      <ScrollToTop />
+  return (
+    <>
+      <ScrollToTop />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          {/* 🌐 PUBLIC PAGES */}
+          <Route path="/" element={<PublicLayout />}>
+            <Route index element={<AnimatedPage><LandingPage /></AnimatedPage>} />
+            <Route path="profil/selayang-pandang" element={<AnimatedPage><SelayangPandangPage /></AnimatedPage>} />
+            <Route path="profil/visi-misi" element={<AnimatedPage><VisiMisiPage /></AnimatedPage>} />
+            <Route path="profil/struktur-organisasi" element={<AnimatedPage><StrukturOrganisasiPage /></AnimatedPage>} />
+            <Route path="services" element={<AnimatedPage><ServicesPage /></AnimatedPage>} />
+            <Route path="news" element={<AnimatedPage><NewsPage /></AnimatedPage>} />
+            <Route path="news/:id" element={<AnimatedPage><NewsDetailPage /></AnimatedPage>} />
+            <Route path="sertifikat" element={<AnimatedPage><CertificateGalleryPage /></AnimatedPage>} />
+            <Route path="program/workshop" element={<AnimatedPage><WorkshopPage /></AnimatedPage>} />
+            <Route path="program/kurikulum" element={<AnimatedPage><KurikulumPage /></AnimatedPage>} />
+          </Route>
 
-      {/* 🌀 AnimatePresence akan menjaga transisi keluar-masuk halaman */}
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          {/* 🌐 PUBLIC PAGES */}
-          <Route path="/" element={<PublicLayout />}>
-            <Route
-              index
-              element={
-                <AnimatedPage>
-                  <LandingPage />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="profil/selayang-pandang"
-              element={
-                <AnimatedPage>
-                  <SelayangPandangPage />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="profil/visi-misi"
-              element={
-                <AnimatedPage>
-                  <VisiMisiPage />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="profil/struktur-organisasi"
-              element={
-                <AnimatedPage>
-                  <StrukturOrganisasiPage />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="services"
-              element={
-                <AnimatedPage>
-                  <ServicesPage />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="news"
-              element={
-                <AnimatedPage>
-                  <NewsPage />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="news/:id"
-              element={
-                <AnimatedPage>
-                  <NewsDetailPage />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="sertifikat"
-              element={
-                <AnimatedPage>
-                  <CertificateGalleryPage />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="program/workshop"
-              element={
-                <AnimatedPage>
-                  <WorkshopPage />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="program/kurikulum"
-              element={
-                <AnimatedPage>
-                  <KurikulumPage />
-                </AnimatedPage>
-              }
-            />
-          </Route>
+          {/* 🔐 AUTH */}
+          <Route path="/login" element={<AnimatedPage><LoginPage /></AnimatedPage>} />
+          <Route path="/register" element={<AnimatedPage><RegisterPage /></AnimatedPage>} />
 
-          {/* 🔐 AUTH */}
-          <Route
-            path="/login"
-            element={
-              <AnimatedPage>
-                <LoginPage />
-              </AnimatedPage>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <AnimatedPage>
-                <RegisterPage />
-              </AnimatedPage>
-            }
-          />
-
-          {/* 🧭 DASHBOARD (PROTECTED) */}
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route
-              index
-              element={
-                <AnimatedPage>
-                  <Dashboard />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="users"
-              element={
-                <AnimatedPage>
-                  <UserManagement />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="news"
-              element={
-                <AnimatedPage>
-                  <NewsManagement />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="news/:id"
-              element={
-                <AnimatedPage>
-                  <NewsDetailPage />
-                </AnimatedPage>
-              }
-            />
-            {/* ✅ Perbaikan dan Penambahan Rute */}
-            <Route
-              path="certificates"
-              element={
-                <AnimatedPage>
-                  <CertificateManagement />
-                </AnimatedPage>
-              }
-            />
+          {/* 🧭 DASHBOARD (DIPERBARUI) */}
             <Route
-              path="curriculums"
-              element={
-                <AnimatedPage>
-                  <CurriculumManagement />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="services"
-              element={
-                <AnimatedPage>
-                  <ServicesManagement />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="profile"
-              element={
-                <AnimatedPage>
-                  <ProfilePage />
-                </AnimatedPage>
-              }
-            />
-            <Route
-              path="settings"
-              element={
-                <AnimatedPage>
-                  <SettingsPage />
-                </AnimatedPage>
-              }
-            />
-          </Route>
+            path="/dashboard/:userId"
+            element={
+                <ProtectedRoute>
+                <DashboardLayout />
+                </ProtectedRoute>
+            }
+            >
+            {/* path index akan merender Dashboard saat URL: /dashboard/ID */}
+            <Route index element={<AnimatedPage><Dashboard /></AnimatedPage>} />
+            
+            {/* Path anak TIDAK boleh diawali dengan '/' agar menjadi /dashboard/ID/users */}
+            <Route path="users" element={<AnimatedPage><UserManagement /></AnimatedPage>} />
+            <Route path="news" element={<AnimatedPage><NewsManagement /></AnimatedPage>} />
+            <Route path="certificates" element={<AnimatedPage><CertificateManagement /></AnimatedPage>} />
+            <Route path="curriculums" element={<AnimatedPage><CurriculumManagement /></AnimatedPage>} />
+            <Route path="services" element={<AnimatedPage><ServicesManagement /></AnimatedPage>} />
+            <Route path="profile" element={<AnimatedPage><ProfilePage /></AnimatedPage>} />
+            <Route path="settings" element={<AnimatedPage><SettingsPage /></AnimatedPage>} />
+            </Route>
 
-          {/* 🚫 404 */}
-          <Route
-            path="*"
-            element={
-              <AnimatedPage>
-                <div className="flex h-screen items-center justify-center text-center text-lg font-medium">
-                  404: Halaman Tidak Ditemukan
-                </div>
-              </AnimatedPage>
-            }
-          />
-        </Routes>
-      </AnimatePresence>
-    </>
-  );
+          {/* Redirect jika path /dashboard saja tanpa ID */}
+          <Route path="/dashboard" element={<Navigate to="/login" replace />} />
+
+          {/* 🚫 404 */}
+          <Route path="*" element={<AnimatedPage><div className="flex h-screen items-center justify-center">404: Halaman Tidak Ditemukan</div></AnimatedPage>} />
+        </Routes>
+      </AnimatePresence>
+    </>
+  );
 };
 
 export default AppRoutes;
-

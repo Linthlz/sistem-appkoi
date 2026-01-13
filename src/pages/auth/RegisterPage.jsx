@@ -4,18 +4,22 @@ import { ArrowLeft } from 'lucide-react';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-// Kita akan membuat fungsi registerUser di AppContext selanjutnya
-// import { useAppContext } from '@/hooks/useAppContext'; 
+import { useAppContext } from '@/hooks/useAppContext'; 
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  // const { registerUser } = useAppContext(); // Akan diaktifkan nanti
+  const { registerUser } = useAppContext();
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
 
   const handleRegister = (e) => {
     e.preventDefault();
-    // Logika untuk mendaftarkan user (untuk saat ini hanya simulasi)
+    const newUser = {
+      ...formData,
+      id: `user-${Date.now()}`, // ID Unik berdasarkan timestamp
+      role: 'Anggota'
+    };
+    registerUser(newUser);
     alert('Pendaftaran berhasil! Silakan masuk.');
-    // registerUser(formData);
     navigate('/login');
   };
 
@@ -27,28 +31,19 @@ const RegisterPage = () => {
             <ArrowLeft size={24} />
           </Link>
           <div className="text-center">
-            <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
-              Buat Akun Baru
-            </h2>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              Daftar untuk menjadi anggota APPKOI.
-            </p>
+            <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">Buat Akun Baru</h2>
           </div>
           <form className="space-y-4" onSubmit={handleRegister}>
-            <Input id="name" type="text" label="Nama Lengkap" placeholder="John Doe" required />
-            <Input id="email" type="email" label="Alamat Email" placeholder="email@example.com" required />
-            <Input id="password" type="password" label="Kata Sandi" placeholder="••••••••" required />
-            <div>
-              <Button type="submit" className="w-full">
-                Daftar
-              </Button>
-            </div>
+            <Input label="Nama Lengkap" type="text" placeholder="John Doe" 
+              value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+            <Input label="Alamat Email" type="email" placeholder="email@example.com" 
+              value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required />
+            <Input label="Kata Sandi" type="password" placeholder="••••••••" 
+              value={formData.password} onChange={(e) => setFormData({...formData, password: e.target.value})} required />
+            <Button type="submit" className="w-full">Daftar</Button>
           </form>
           <p className="text-center text-sm">
-            Sudah punya akun?{' '}
-            <Link to="/login" className="font-medium text-primary hover:text-primary-dark">
-              Masuk di sini
-            </Link>
+            Sudah punya akun? <Link to="/login" className="text-primary">Masuk di sini</Link>
           </p>
         </div>
       </Card>
