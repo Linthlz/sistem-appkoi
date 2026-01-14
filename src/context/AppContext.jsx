@@ -6,9 +6,11 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [theme, setTheme] = useState('light');
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Default false untuk keamanan
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const [allUsers, setAllUsers] = useState(dummyUsers); // Database user lokal
+
+  // ✅ SINGLE SOURCE OF TRUTH
+  const [allUsers, setAllUsers] = useState(dummyUsers);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -16,13 +18,33 @@ export const AppProvider = ({ children }) => {
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
 
-  const login = (user) => {
-    setIsAuthenticated(true);
-    setCurrentUser(user);
+  const login = (email, password) => {
+    const user = allUsers.find(
+      u => u.email === email && u.password === password
+    );
+
+    if (user) {
+      setIsAuthenticated(true);
+      setCurrentUser(user);
+      return { success: true, role: user.role };
+    }
+    return { success: false, message: 'Email atau password salah!' };
   };
 
   const registerUser = (newUser) => {
-    setAllUsers((prev) => [...prev, newUser]);
+    setAllUsers(prev => [...prev, newUser]);
+  };
+
+  const updateUser = (updatedUser) => {
+    setAllUsers(prev =>
+      prev.map(user =>
+        user.id === updatedUser.id ? updatedUser : user
+      )
+    );
+  };
+
+  const deleteUser = (id) => {
+    setAllUsers(prev => prev.filter(user => user.id !== id));
   };
 
   const logout = () => {
@@ -34,8 +56,12 @@ export const AppProvider = ({ children }) => {
     isSidebarOpen, setSidebarOpen,
     theme, toggleTheme,
     isAuthenticated, login, logout, currentUser,
-    allUsers, registerUser // Tambahkan ke provider
+    allUsers, registerUser, updateUser, deleteUser
   };
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider value={value}>
+      {children}
+    </AppContext.Provider>
+  );
 };

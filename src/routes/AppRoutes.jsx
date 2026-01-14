@@ -9,19 +9,8 @@ import ScrollToTop from "../components/layout/ScrollToTop.jsx";
 import PublicLayout from "../components/layout/PublicLayout.jsx";
 import DashboardLayout from "../components/layout/DashboardLayout.jsx";
 
-// Public Pages
+// Public & Auth Pages
 import LandingPage from "../pages/public/LandingPage.jsx";
-import ServicesPage from "../pages/public/ServicesPage.jsx";
-import NewsPage from "../pages/public/NewsPage.jsx";
-import NewsDetailPage from "../pages/public/NewsDetailPage.jsx";
-import SelayangPandangPage from "../pages/public/SelayangPandangPage.jsx";
-import VisiMisiPage from "../pages/public/VisiMisiPage.jsx";
-import StrukturOrganisasiPage from "../pages/public/StrukturOrganisasiPage.jsx";
-import CertificateGalleryPage from "../pages/public/CertificateGalleryPage.jsx";
-import WorkshopPage from "../pages/public/WorkshopPage.jsx";
-import KurikulumPage from "../pages/public/KurikulumPage.jsx";
-
-// Auth Pages
 import LoginPage from "../pages/auth/LoginPage.jsx";
 import RegisterPage from "../pages/auth/RegisterPage.jsx";
 
@@ -29,11 +18,14 @@ import RegisterPage from "../pages/auth/RegisterPage.jsx";
 import Dashboard from "../pages/dashboard/Dashboard.jsx";
 import UserManagement from "../pages/dashboard/UserManagement.jsx";
 import NewsManagement from "../pages/dashboard/NewsManagement.jsx";
-import ServicesManagement from "../pages/dashboard/ServicesManagement.jsx";
 import ProfilePage from "../pages/dashboard/ProfilePage.jsx";
 import SettingsPage from "../pages/dashboard/SettingsPage.jsx";
-import CertificateManagement from '../pages/dashboard/CertificateManagement.jsx';
+
+// PERBAIKAN IMPORT: Sesuaikan dengan nama file fisik di folder dashboard Anda
+import CertificateManagement from "../pages/dashboard/CertificateManagement.jsx";
 import CurriculumManagement from "../pages/dashboard/CurriculumManagement.jsx";
+// Gunakan ServicesManagement karena file ProgramManagement tidak ada di folder Anda
+import ServicesManagement from "../pages/dashboard/ServicesManagement.jsx"; 
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -43,51 +35,63 @@ const AppRoutes = () => {
       <ScrollToTop />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
-          {/* 🌐 PUBLIC PAGES */}
+          
+          {/* 🌐 PUBLIC ROUTES */}
           <Route path="/" element={<PublicLayout />}>
             <Route index element={<AnimatedPage><LandingPage /></AnimatedPage>} />
-            <Route path="profil/selayang-pandang" element={<AnimatedPage><SelayangPandangPage /></AnimatedPage>} />
-            <Route path="profil/visi-misi" element={<AnimatedPage><VisiMisiPage /></AnimatedPage>} />
-            <Route path="profil/struktur-organisasi" element={<AnimatedPage><StrukturOrganisasiPage /></AnimatedPage>} />
-            <Route path="services" element={<AnimatedPage><ServicesPage /></AnimatedPage>} />
-            <Route path="news" element={<AnimatedPage><NewsPage /></AnimatedPage>} />
-            <Route path="news/:id" element={<AnimatedPage><NewsDetailPage /></AnimatedPage>} />
-            <Route path="sertifikat" element={<AnimatedPage><CertificateGalleryPage /></AnimatedPage>} />
-            <Route path="program/workshop" element={<AnimatedPage><WorkshopPage /></AnimatedPage>} />
-            <Route path="program/kurikulum" element={<AnimatedPage><KurikulumPage /></AnimatedPage>} />
           </Route>
 
-          {/* 🔐 AUTH */}
+          {/* 🔐 AUTH ROUTES */}
           <Route path="/login" element={<AnimatedPage><LoginPage /></AnimatedPage>} />
           <Route path="/register" element={<AnimatedPage><RegisterPage /></AnimatedPage>} />
+          <Route path="/unauthorized" element={<div className="p-20 text-center text-red-500 font-bold">Akses Ditolak!</div>} />
 
-          {/* 🧭 DASHBOARD (DIPERBARUI) */}
-            <Route
+          {/* 🧭 PROTECTED DASHBOARD ROUTES */}
+          <Route
             path="/dashboard/:userId"
             element={
-                <ProtectedRoute>
+              <ProtectedRoute allowedRoles={['Anggota', 'Admin']}>
                 <DashboardLayout />
-                </ProtectedRoute>
+              </ProtectedRoute>
             }
-            >
-            {/* path index akan merender Dashboard saat URL: /dashboard/ID */}
+          >
             <Route index element={<AnimatedPage><Dashboard /></AnimatedPage>} />
-            
-            {/* Path anak TIDAK boleh diawali dengan '/' agar menjadi /dashboard/ID/users */}
             <Route path="users" element={<AnimatedPage><UserManagement /></AnimatedPage>} />
             <Route path="news" element={<AnimatedPage><NewsManagement /></AnimatedPage>} />
             <Route path="certificates" element={<AnimatedPage><CertificateManagement /></AnimatedPage>} />
+            
+            {/* Mengarahkan rute curriculums (dengan 's') ke komponen yang sama */}
+            <Route path="curriculum" element={<AnimatedPage><CurriculumManagement /></AnimatedPage>} />
             <Route path="curriculums" element={<AnimatedPage><CurriculumManagement /></AnimatedPage>} />
+            
+            {/* PERBAIKAN: Menggunakan ServicesManagement untuk rute program */}
+            <Route path="program" element={<AnimatedPage><ServicesManagement /></AnimatedPage>} />
+            <Route path="programs" element={<AnimatedPage><ServicesManagement /></AnimatedPage>} />
             <Route path="services" element={<AnimatedPage><ServicesManagement /></AnimatedPage>} />
+
             <Route path="profile" element={<AnimatedPage><ProfilePage /></AnimatedPage>} />
             <Route path="settings" element={<AnimatedPage><SettingsPage /></AnimatedPage>} />
-            </Route>
+          </Route>
 
-          {/* Redirect jika path /dashboard saja tanpa ID */}
+          {/* 🔄 REDIRECTS & 404 */}
           <Route path="/dashboard" element={<Navigate to="/login" replace />} />
-
-          {/* 🚫 404 */}
-          <Route path="*" element={<AnimatedPage><div className="flex h-screen items-center justify-center">404: Halaman Tidak Ditemukan</div></AnimatedPage>} />
+          
+          <Route path="*" element={
+            <div className="flex h-screen flex-col items-center justify-center bg-gray-50">
+              <h1 className="text-9xl font-extrabold text-red-500 tracking-widest">404</h1>
+              <div className="bg-red-500 px-2 text-sm rounded rotate-12 absolute text-white">
+                Halaman Tidak Ditemukan
+              </div>
+              <button className="mt-5" onClick={() => window.history.back()}>
+                <div className="relative inline-block text-sm font-medium text-red-500 group active:text-red-500 focus:outline-none focus:ring cursor-pointer">
+                  <span className="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-red-500 group-hover:translate-y-0 group-hover:translate-x-0"></span>
+                  <span className="relative block px-8 py-3 bg-white border border-current">
+                    Kembali Ke Sebelumnya
+                  </span>
+                </div>
+              </button>
+            </div>
+          } />
         </Routes>
       </AnimatePresence>
     </>
